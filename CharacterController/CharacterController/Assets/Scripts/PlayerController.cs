@@ -5,19 +5,28 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    // Move input
     private Vector2 _input;
     private CharacterController _characterController;
     private Vector3 _direction;
 
+    // Movement parameters
     [SerializeField] private float speed;
     [SerializeField] private float smoothTime = 0.05f;
     private float _currentVelocity;
 
+    // Gravity
     private float _gravity = -9.81f;
     [SerializeField] private float gravityMult = 3.0f;
     private float _velocity;
 
+    // Jump
     [SerializeField] private float _jumpPower = 2.0f;
+
+    // Animation
+    [SerializeField] private Animator _animator;
+    private static readonly int Speed = Animator.StringToHash("Speed");
+
 
     private void Awake()
     {
@@ -66,12 +75,17 @@ public class PlayerController : MonoBehaviour
         }
         _direction.y = _velocity;
     }
+    private void AnimationParameters()
+    {
+        _animator?.SetFloat(Speed, _input.sqrMagnitude);
+    }
 
     private void Update()
     {
         ApplyRotation();
         ApplyMovement();
         ApplyGravity();
+        AnimationParameters();
 
     }
 
