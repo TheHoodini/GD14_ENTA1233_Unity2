@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
         _jumped = true;
         _velocity += _jumpPower;
+        Debug.Log("Jumped");
     }
 
     private void ApplyRotation()
@@ -64,6 +65,11 @@ public class PlayerController : MonoBehaviour
     private void ApplyMovement() 
     {
         _characterController.Move(_direction * speed * Time.deltaTime);
+
+        if (_characterController.isGrounded)
+        {
+            _jumped = false;
+        }
     }
 
     private void ApplyGravity() 
@@ -79,10 +85,6 @@ public class PlayerController : MonoBehaviour
 
         _direction.y = _velocity;
 
-        if (_characterController.isGrounded)
-        {
-            _jumped = false;
-        }
     }
     private void AnimationParameters()
     {
@@ -94,8 +96,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ApplyRotation();
-        ApplyMovement();
         ApplyGravity();
+        ApplyMovement();
         AnimationParameters();
     }
 
