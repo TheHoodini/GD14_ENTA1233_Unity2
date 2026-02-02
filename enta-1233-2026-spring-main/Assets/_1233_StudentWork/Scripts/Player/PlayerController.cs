@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Camera
     [SerializeField] private CinemachineCamera _normalCamera;
     [SerializeField] private CinemachineCamera _zoomedCamera;
+    private bool _isZoomed;
 
     private void Awake()
     {
@@ -59,30 +60,47 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            //_zoomedCamera.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
+            _isZoomed = true;
         }
         else if (context.canceled)
         {
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
+            _isZoomed = false;
         }
     }
 
     private Transform GetActiveCameraTransform()
     {
-        // Return the transform of whichever camera is currently active
         if (_normalCamera.gameObject.activeInHierarchy)
             return _normalCamera.transform;
         else if (_zoomedCamera.gameObject.activeInHierarchy)
             return _zoomedCamera.transform;
 
-        return _normalCamera.transform; // fallback
+        return _normalCamera.transform; 
     }
 
     private void ApplyRotation()
     {
         if (_input.sqrMagnitude == 0) return;
+
+        // look forward when zoomed
+        if (_isZoomed)
+        {
+            Vector3 cameraForward = _zoomedCamera.transform.forward;
+            cameraForward.y = 0;
+
+            if (cameraForward.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                transform.rotation = targetRotation;
+            }
+            return;
+        }
 
         var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, smoothTime);
@@ -91,28 +109,21 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
-        // Get the active camera's transform
         Transform cameraTransform = GetActiveCameraTransform();
 
-        // Get camera's forward and right directions
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
 
-        // Flatten the camera directions (remove y component)
         cameraForward.y = 0;
         cameraRight.y = 0;
 
-        // Normalize to ensure consistent speed
         cameraForward.Normalize();
         cameraRight.Normalize();
 
-        // Calculate movement direction relative to camera
         _direction = cameraForward * _input.y + cameraRight * _input.x;
 
-        // Apply gravity to the Y component
         _direction.y = _velocity;
 
-        // Move the character
         _characterController.Move(_direction * speed * Time.deltaTime);
 
         if (_characterController.isGrounded)
@@ -143,8 +154,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ApplyGravity();
-        ApplyMovement();
         ApplyRotation();
+        ApplyMovement();
         AnimationParameters();
     }
 }
