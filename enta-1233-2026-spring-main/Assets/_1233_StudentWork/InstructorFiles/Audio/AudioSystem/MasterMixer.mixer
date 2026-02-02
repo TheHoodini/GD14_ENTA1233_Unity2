@@ -14,6 +14,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-8921584286449082890
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 315d47f49540af84ca8669a252c56293
+  m_EffectName: Attenuation
+  m_MixLevel: dde6f0389e7e7864fafcf8c502a37b75
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-7634629627303245847
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -85,6 +99,7 @@ AudioMixerGroupController:
   m_GroupID: d0d11369ff20642198a2d8ecb9db7693
   m_Children:
   - {fileID: -7634629627303245847}
+  - {fileID: 7115083434830335609}
   m_Volume: bd57178483ca240709dbd4918d0f9bfd
   m_Pitch: 2cdd5159eb878480d8cf530cca1e779f
   m_Send: 00000000000000000000000000000000
@@ -122,6 +137,7 @@ AudioMixerController:
     - d0d11369ff20642198a2d8ecb9db7693
     - e50ec3797535f4a269c79c29a46018bb
     - 2f6a70dde3b93d149917b79ad923e5e3
+    - 94e1961370a4dc348a0215e4bf47872c
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -199,3 +215,22 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &7115083434830335609
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JumpLanding
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 94e1961370a4dc348a0215e4bf47872c
+  m_Children: []
+  m_Volume: 592d75ecc4c3a31448d5967b00f64cbd
+  m_Pitch: f254ef379b8e4994aa70f49e9870bb92
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8921584286449082890}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
