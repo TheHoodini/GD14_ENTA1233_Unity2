@@ -107,6 +107,12 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
+    private void LockCamera()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     private void ApplyMovement()
     {
         Transform cameraTransform = GetActiveCameraTransform();
@@ -154,6 +160,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ApplyGravity();
+        LockCamera();
         ApplyRotation();
         ApplyMovement();
         AnimationParameters();

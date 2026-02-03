@@ -1962,13 +1962,13 @@ MonoBehaviour:
   Radius: 5
   Orbits:
     Top:
-      Radius: 2
-      Height: 2.25
+      Radius: 3
+      Height: 2.3
     Center:
       Radius: 3
       Height: 2.25
     Bottom:
-      Radius: 2.5
+      Radius: 2
       Height: -0.5
     SplineCurvature: 0.5
   RecenteringTarget: 2
@@ -2335,8 +2335,8 @@ MonoBehaviour:
       Radius: 4
       Height: 2.25
     Bottom:
-      Radius: 2.5
-      Height: -0.5
+      Radius: 2
+      Height: 0
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
