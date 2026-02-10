@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -28,6 +29,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     private static readonly int Speed = Animator.StringToHash("Speed");
 
+    // Camera
+    [SerializeField] private CinemachineCamera _normalCamera;
+    [SerializeField] private CinemachineCamera _zoomedCamera;
+    private bool _isZoomed;
 
     private void Awake()
     {
@@ -38,8 +43,6 @@ public class PlayerController : MonoBehaviour
     {
         _input = context.ReadValue<Vector2>();
         Debug.Log(_input);
-
-        _direction = new Vector3(_input.x, 0, _input.y);
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -53,17 +56,80 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Jumped");
     }
 
+    public void CameraZoom(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            //_zoomedCamera.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            _normalCamera.gameObject.SetActive(false);
+            _zoomedCamera.gameObject.SetActive(true);
+            _isZoomed = true;
+        }
+        else if (context.canceled)
+        {
+            _zoomedCamera.gameObject.SetActive(false);
+            _normalCamera.gameObject.SetActive(true);
+            _isZoomed = false;
+        }
+    }
+
+    private Transform GetActiveCameraTransform()
+    {
+        if (_normalCamera.gameObject.activeInHierarchy)
+            return _normalCamera.transform;
+        else if (_zoomedCamera.gameObject.activeInHierarchy)
+            return _zoomedCamera.transform;
+
+        return _normalCamera.transform; 
+    }
+
     private void ApplyRotation()
     {
         if (_input.sqrMagnitude == 0) return;
 
-        var targetAngle = Mathf.Atan2(_direction.z * -1, _direction.x) * Mathf.Rad2Deg;
+        // look forward when zoomed
+        if (_isZoomed)
+        {
+            Vector3 cameraForward = _zoomedCamera.transform.forward;
+            cameraForward.y = 0;
+
+            if (cameraForward.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                transform.rotation = targetRotation;
+            }
+            return;
+        }
+
+        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, smoothTime);
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
-    private void ApplyMovement() 
+    private void LockCamera()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void ApplyMovement()
+    {
+        Transform cameraTransform = GetActiveCameraTransform();
+
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
+
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        _direction = cameraForward * _input.y + cameraRight * _input.x;
+
+        _direction.y = _velocity;
+
         _characterController.Move(_direction * speed * Time.deltaTime);
 
         if (_characterController.isGrounded)
@@ -72,7 +138,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ApplyGravity() 
+    private void ApplyGravity()
     {
         if (_characterController.isGrounded && _velocity < 0.0f)
         {
@@ -82,10 +148,8 @@ public class PlayerController : MonoBehaviour
         {
             _velocity += _gravity * gravityMult * Time.deltaTime;
         }
-
-        _direction.y = _velocity;
-
     }
+
     private void AnimationParameters()
     {
         _animator?.SetFloat(Speed, _input.sqrMagnitude);
@@ -95,11 +159,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        ApplyRotation();
         ApplyGravity();
+        LockCamera();
+        ApplyRotation();
         ApplyMovement();
         AnimationParameters();
     }
-
-
 }
