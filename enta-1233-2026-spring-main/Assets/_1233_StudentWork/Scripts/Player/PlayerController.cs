@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            //_zoomedCamera.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
@@ -107,11 +106,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
-    private void LockCamera()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+
 
     private void ApplyMovement()
     {
@@ -160,7 +155,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ApplyGravity();
-        LockCamera();
         ApplyRotation();
         ApplyMovement();
         AnimationParameters();
