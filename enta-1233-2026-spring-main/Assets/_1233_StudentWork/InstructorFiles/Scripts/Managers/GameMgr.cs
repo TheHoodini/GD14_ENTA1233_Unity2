@@ -60,6 +60,8 @@ public class GameMgr : Singleton<GameMgr>
     /// </summary>
     public void StartGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         IsGameRunning = true;
     }
     
@@ -68,13 +70,18 @@ public class GameMgr : Singleton<GameMgr>
     /// </summary>
     public void GameOver()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         IsGameRunning = false;
         SceneMgr.Instance.LoadScene(GameScenes.GameOver, GameMenus.GameOverMenu);
     }
 
     public void NextLevel()
     {
-        throw new NotImplementedException("No next level logic");
+        SceneMgr.Instance.LoadScene(GameScenes.GameOver, GameMenus.LevelCompleteMenu);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        IsGameRunning = true;
     }
 
     /// <summary>
