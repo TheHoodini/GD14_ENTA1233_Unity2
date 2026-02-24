@@ -184,6 +184,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8524240638639900879}
     m_Modifications:
+    - target: {fileID: 2406701482528595503, guid: 5f83c669dbe6dce43af6834d1908eb9e, type: 3}
+      propertyPath: '_reusableMusicClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 920ad247d6ce01442af4f2028ec9218c, type: 3}
+    - target: {fileID: 2406701482528595503, guid: 5f83c669dbe6dce43af6834d1908eb9e, type: 3}
+      propertyPath: '_reusableMusicClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f6130b39d11d314ca7798324d196eb7, type: 3}
     - target: {fileID: 4226527120324622585, guid: 5f83c669dbe6dce43af6834d1908eb9e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -308,6 +316,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8524240638639900879}
     m_Modifications:
+    - target: {fileID: 4627058941732817289, guid: 275b2fcd5e9d84cab82c4650ca486b5a, type: 3}
+      propertyPath: _gameOverMenuPrefab
+      value: 
+      objectReference: {fileID: -7391814166123650219, guid: a30814f4769e4a248a58d225549406bb, type: 3}
+    - target: {fileID: 4627058941732817289, guid: 275b2fcd5e9d84cab82c4650ca486b5a, type: 3}
+      propertyPath: _levelCompletedMenuPrefab
+      value: 
+      objectReference: {fileID: 5503205323164581371, guid: d566c6d6cd9636740aa1638fca58d5c9, type: 3}
     - target: {fileID: 7363516041045961589, guid: 275b2fcd5e9d84cab82c4650ca486b5a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
