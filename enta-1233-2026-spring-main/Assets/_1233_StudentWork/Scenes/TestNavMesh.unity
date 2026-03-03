@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 140460561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.62, y: 6.13, z: 35.99}
+  m_LocalPosition: {x: -4.72, y: 0, z: -6.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
       propertyPath: patrolPoints.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
@@ -613,6 +613,10 @@ PrefabInstance:
       propertyPath: 'patrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 407924247}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: 'patrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 140460562}
     - target: {fileID: 7188116014422038030, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
       propertyPath: m_Name
       value: EnemySpike
@@ -622,6 +626,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+--- !u!1 &1208161174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3938663120211471144, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+  m_PrefabInstance: {fileID: 1894574101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1208161175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208161174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90f9c706955bd94f9c91a7974e4bb72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1255021243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySnake
       objectReference: {fileID: 0}
+    - target: {fileID: 6098729004485732274, guid: e084bf81c271a4149900aa268cbd2b25, type: 3}
+      propertyPath: _detectionRange
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1658,7 +1683,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3938663120211471144, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1208161175}
   m_SourcePrefab: {fileID: 100100000, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
 --- !u!1001 &1914363531
 PrefabInstance:
@@ -1710,6 +1738,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1319217558181676005, guid: 171c4aa86b5d8ac42a5d77b35b16e76f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8026503455022714450, guid: 171c4aa86b5d8ac42a5d77b35b16e76f, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8816005177664752257, guid: 171c4aa86b5d8ac42a5d77b35b16e76f, type: 3}

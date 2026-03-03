@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Snakelet
       objectReference: {fileID: 0}
+    - target: {fileID: 4707392404472071998, guid: db3eb18d719b05b44bc17972989753e1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: f495f2cff2977054086deb23bd44e204, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

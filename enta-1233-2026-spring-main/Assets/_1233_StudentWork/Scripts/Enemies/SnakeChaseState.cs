@@ -4,6 +4,10 @@ public class SnakeChaseState : EnemyState
 {
     private readonly SnakeBrain _brain;
 
+    public void Awake()
+    {
+
+    }   
     public SnakeChaseState(SnakeBrain brain, EnemyStateMachine machine) : base(machine)
     {
         _brain = brain;
@@ -11,21 +15,20 @@ public class SnakeChaseState : EnemyState
 
     public override void Tick()
     {
-        // 1. Get the player's position
         var target = _brain.TargetProvider.GetTarget();
-        if (target == null) return;
 
-        // 2. Tell the mover to go there
+        // Lost the player go back to idle
+        if (target == null || !_brain.Detection.IsTargetInDetectionRange(target))
+        {
+            Machine.ChangeState(new SnakeIdleState(_brain, Machine));
+            return;
+        }
+
         _brain.Mover?.SetDestination(target.position);
+        _brain.AnimatorDriver.SetSpeed(_brain.Mover?.Velocity.magnitude ?? 0f);
 
-        // 3. Update animations based on movement speed
-        if (_brain.Mover != null)
-            _brain.AnimatorDriver.SetSpeed(_brain.Mover.Velocity.magnitude);
-        else 
-            _brain.AnimatorDriver.SetSpeed(0);
-
-        // 4. If we are close enough switch to attack state
         var distance = Vector3.Distance(_brain.transform.position, target.position);
-        if (distance <= _brain.AttackRange) Machine.ChangeState(new SnakeAttackState(_brain, Machine));
+        if (distance <= _brain.AttackRange)
+            Machine.ChangeState(new SnakeAttackState(_brain, Machine));
     }
 }

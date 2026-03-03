@@ -38,7 +38,8 @@ public class SnakeBrain : MonoBehaviour
 
     private void Start()
     {
-        _stateMachine.Initialize(new SnakeChaseState(this, _stateMachine));
+        // Start idle
+        _stateMachine.Initialize(new SnakeIdleState(this, _stateMachine));
     }
 
     private void OnEnable()
