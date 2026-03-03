@@ -22,6 +22,6 @@ public class EnemyStateMachine : MonoBehaviour
 
         _currentState?.Exit();
         _currentState = newState;
-        _currentState.Enter();
+        _currentState?.Enter();
     }
 }
