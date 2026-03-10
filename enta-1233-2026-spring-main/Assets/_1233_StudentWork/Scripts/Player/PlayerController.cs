@@ -13,9 +13,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 _direction;
 
     // Movement parameters
+    [Header("Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float smoothTime = 0.05f;
     private float _currentVelocity;
+    private bool _isRunning;
 
     // Gravity
     private float _gravity = -9.81f;
@@ -30,7 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     private static readonly int Speed = Animator.StringToHash("Speed");
 
-    // Camera
+    // Cameras
+    [Header("Cameras")]
     [SerializeField] private CinemachineCamera _normalCamera;
     [SerializeField] private CinemachineCamera _zoomedCamera;
     private bool _isZoomed;
@@ -89,6 +92,11 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(_input);
     }
 
+    public void Run(InputAction.CallbackContext context)
+    {
+        _isRunning = context.ReadValueAsButton();
+    }
+
     public void Jump(InputAction.CallbackContext context)
     {
         if (!context.started) return;
@@ -97,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         _jumped = true;
         _velocity += _jumpPower;
-        Debug.Log("Jumped");
+        //Debug.Log("Jumped");
     }
 
     public void CameraZoom(InputAction.CallbackContext context)
@@ -169,7 +177,8 @@ public class PlayerController : MonoBehaviour
 
         _direction.y = _velocity;
 
-        _characterController.Move(_direction * speed * Time.deltaTime);
+        float _currentSpeed = speed * (_isRunning ? 2f : 1f);
+        _characterController.Move(_direction * _currentSpeed * Time.deltaTime);
 
         if (_characterController.isGrounded)
         {
@@ -191,7 +200,11 @@ public class PlayerController : MonoBehaviour
 
     private void AnimationParameters()
     {
-        _animator?.SetFloat(Speed, _input.sqrMagnitude);
+        float animSpeed = 0f;
+        if (_input.sqrMagnitude > 0)
+            animSpeed = _isRunning ? 2f : 1f;
+
+        _animator?.SetFloat(Speed, animSpeed);
         _animator?.SetBool("Jumped", _jumped);
         _animator?.SetBool("IsGrounded", _characterController.isGrounded);
     }

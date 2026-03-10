@@ -1472,6 +1472,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90f9c706955bd94f9c91a7974e4bb72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1208161180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2314324383355020833, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+  m_PrefabInstance: {fileID: 1894574101}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208161174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159f46a25cbcadb4a945495b54cd4e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1224282885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2942,6 +2953,46 @@ PrefabInstance:
     - target: {fileID: 6011592065181945548, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: -37.96334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: db540e7a-f9bf-4351-b9cd-52d7a217390d
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: 'Gameplay/Run[/Keyboard/shift]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1208161180}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Run
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443670612627481093, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7672171556551141348, guid: cde5d2246f1a90c46968e01f5caa54d7, type: 3}
       propertyPath: m_LocalPosition.z
