@@ -16,9 +16,7 @@ public class SimpleDamageReceiver : MonoBehaviour, IDamageReceiver
     public void ApplyDamage(DamageInfo info)
     {
         if (_health == null) return;
-        
         info.Amount = Mathf.RoundToInt(info.Amount * _damageMultiplier);
-
         _health.ApplyDamage(info);
     }
 

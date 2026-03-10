@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviour
                 HitNormal = collision.contacts[0].normal
             };
             damageReceiver.ApplyDamage(info);
+            Debug.Log($"[SEED] hit {collision.gameObject.name} for {_damage} damage.");
         }
 
         Destroy(gameObject);

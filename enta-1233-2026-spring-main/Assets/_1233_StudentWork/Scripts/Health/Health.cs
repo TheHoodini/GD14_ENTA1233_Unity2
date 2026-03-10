@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        
+        ResetHealth();
     }
 
     public event Action<DamageInfo> OnDamaged;
@@ -34,7 +34,8 @@ public class Health : MonoBehaviour
         if (IsDead || _isInvulnerable) return;
 
         CurrentHealth -= info.Amount;
-        CurrentHealth = Mathf.Max(CurrentHealth, 0, _maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, _maxHealth);
+        Debug.Log($"Damage applied: {info.Amount}, Current Health: {CurrentHealth}");
 
         OnDamaged?.Invoke(info);
 
@@ -46,7 +47,7 @@ public class Health : MonoBehaviour
         if (IsDead) return;
 
         CurrentHealth += amount;
-        CurrentHealth = Mathf.Min(CurrentHealth, 0, _maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, _maxHealth);
         OnHealed?.Invoke();
     }
 

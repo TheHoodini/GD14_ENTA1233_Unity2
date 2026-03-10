@@ -42,6 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7527190836000062272}
+  - component: {fileID: 4716238089558624652}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -64,6 +65,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 546671172694387813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4716238089558624652
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3340721035086483204}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.23
+  m_Center: {x: 0, y: -0.11, z: 0}
 --- !u!1 &5000461413125426934
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 5000461413125426934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.82, y: 1, z: -1.03}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -139,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _speed: 20
-  _lifetime: 5
+  _lifetime: 3
   _useGravity: 1
 --- !u!1001 &2134223705442825512
 PrefabInstance:

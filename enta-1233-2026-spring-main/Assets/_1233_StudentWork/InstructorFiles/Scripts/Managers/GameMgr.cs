@@ -79,8 +79,8 @@ public class GameMgr : Singleton<GameMgr>
     public void NextLevel()
     {
         SceneMgr.Instance.LoadScene(GameScenes.GameOver, GameMenus.LevelCompleteMenu);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         IsGameRunning = true;
     }
 

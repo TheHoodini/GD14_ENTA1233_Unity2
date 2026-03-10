@@ -38,13 +38,17 @@ public class SnakeAttackState : EnemyState
     private void ApplyMeleeDamage()
     {
         var target = _brain.TargetProvider.GetTarget();
+
         if (target == null) return;
+        
 
         // Final check to see if target is still in range
         if (Vector3.Distance(_brain.transform.position, target.position) <= _brain.AttackRange + 0.5f)
         {
             var receiver = target.GetComponentInChildren<IDamageReceiver>();
             if (receiver != null)
+            { 
+                Debug.Log($"Applying damage to {target.name}");
                 receiver.ApplyDamage(
                     new DamageInfo
                     {
@@ -53,6 +57,7 @@ public class SnakeAttackState : EnemyState
                         HitPoint = target.position,
                         HitNormal = Vector3.up
                     });
+            }
         }
     }
 }

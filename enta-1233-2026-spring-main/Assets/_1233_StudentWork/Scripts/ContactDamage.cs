@@ -44,7 +44,7 @@ public class ContactDamage : MonoBehaviour
             };
             damageReceiver.ApplyDamage(info);
             _nextDamageTime = Time.time + _cooldown;
-            Debug.Log($"[ContactDamage] Damaged {target.name} for {_damage}");
+            Debug.Log($"[SPIKE] Damaged {target.name} for {_damage}");
         }
     }
 }

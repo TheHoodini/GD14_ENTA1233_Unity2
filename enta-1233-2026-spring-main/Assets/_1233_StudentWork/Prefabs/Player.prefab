@@ -471,6 +471,9 @@ GameObject:
   - component: {fileID: 7277550877797896683}
   - component: {fileID: 2314324383355020833}
   - component: {fileID: 7443670612627481093}
+  - component: {fileID: 2310647724977785433}
+  - component: {fileID: 1226596395589616373}
+  - component: {fileID: 6799803928448326824}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -541,6 +544,7 @@ MonoBehaviour:
   _animator: {fileID: 488117183130113404}
   _normalCamera: {fileID: 3462820360965140944}
   _zoomedCamera: {fileID: 2090423813006212927}
+  _health: {fileID: 2310647724977785433}
 --- !u!114 &7443670612627481093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,6 +623,47 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2310647724977785433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938663120211471144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c970a82e09331de418488eeb49df0294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _isInvulnerable: 0
+--- !u!114 &1226596395589616373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938663120211471144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588dd13b81b4cb44961337ef72b3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 2310647724977785433}
+  _damageMultiplier: 1
+--- !u!114 &6799803928448326824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938663120211471144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd88273239ea9249a4a11d66b5e0701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: {x: 0, y: 1, z: 0}
 --- !u!1 &6053323188155568529
 GameObject:
   m_ObjectHideFlags: 0
