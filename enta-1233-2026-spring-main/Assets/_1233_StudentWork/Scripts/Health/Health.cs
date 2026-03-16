@@ -7,9 +7,11 @@ public class Health : MonoBehaviour
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private bool _isInvulnerable;
 
-    [Header("Damage Flash")]
-    [SerializeField] private float _damageFlashDuration = 0.3f;
+    [Header("Color settings")]
     [SerializeField] private Color _damageFlashColor = Color.red;
+    [SerializeField] private float _damageFlashDuration = 0.3f;
+    [SerializeField] private Color _invulnerableFlashColor = new Color(0, 166, 255);
+    [SerializeField] private float _invulnerableFlashSpeed = 7f;
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => _maxHealth;
@@ -18,6 +20,7 @@ public class Health : MonoBehaviour
     private Renderer[] _renderers;
     private Color[] _originalColors;
     private Coroutine _flashCoroutine;
+    private Coroutine _invulnerableFlashCoroutine;
     //private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
 
     private void Awake()
@@ -28,6 +31,28 @@ public class Health : MonoBehaviour
             _originalColors[i] = _renderers[i].material.color;
 
         ResetHealth();
+    }
+
+    public void Update()
+    {
+        if (_isInvulnerable)
+        {
+            if (_invulnerableFlashCoroutine != null)
+                StopCoroutine(_invulnerableFlashCoroutine);
+            _invulnerableFlashCoroutine = StartCoroutine(InvulnerableFlashCoroutine());
+        }
+        else
+        {
+            if (_invulnerableFlashCoroutine != null)
+            {
+                StopCoroutine(_invulnerableFlashCoroutine);
+                _invulnerableFlashCoroutine = null;
+            }
+
+            // Restore original colors
+            for (int i = 0; i < _renderers.Length; i++)
+                _renderers[i].material.color = _originalColors[i];
+        }
     }
 
     public event Action<DamageInfo> OnDamaged;
@@ -74,6 +99,17 @@ public class Health : MonoBehaviour
     public void SetInvulnerable(bool isInvulnerable)
     {
         _isInvulnerable = isInvulnerable;
+    }
+
+    private IEnumerator InvulnerableFlashCoroutine()
+    {
+        while (_isInvulnerable)
+        {
+            float t = (Mathf.Sin(Time.time * _invulnerableFlashSpeed) + 1f) / 2f;
+            for (int i = 0; i < _renderers.Length; i++)
+                _renderers[i].material.color = Color.Lerp(_originalColors[i], _invulnerableFlashColor, t);
+            yield return null;
+        }
     }
 
     private void FlashDamageColor()

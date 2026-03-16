@@ -675,8 +675,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _isInvulnerable: 0
-  _damageFlashDuration: 0.3
   _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  _damageFlashDuration: 0.3
+  _invulnerableFlashColor: {r: 0, g: 0.64825296, b: 1, a: 1}
+  _invulnerableFlashSpeed: 7
 --- !u!114 &1226596395589616373
 MonoBehaviour:
   m_ObjectHideFlags: 0

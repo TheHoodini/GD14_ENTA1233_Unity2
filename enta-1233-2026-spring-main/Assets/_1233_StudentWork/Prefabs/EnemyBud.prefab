@@ -116,8 +116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _isInvulnerable: 0
-  _damageFlashDuration: 0.3
   _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  _damageFlashDuration: 0.3
+  _invulnerableFlashColor: {r: 0, g: 166, b: 255, a: 1}
+  _invulnerableFlashSpeed: 7
 --- !u!114 &8831867153812906425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0588dd13b81b4cb44961337ef72b3aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 0}
+  _health: {fileID: 105959327475721812}
   _damageMultiplier: 1
 --- !u!136 &4558727764757870378
 CapsuleCollider:
