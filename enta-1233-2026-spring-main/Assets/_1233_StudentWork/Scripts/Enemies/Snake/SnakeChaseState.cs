@@ -4,10 +4,6 @@ public class SnakeChaseState : EnemyState
 {
     private readonly SnakeBrain _brain;
 
-    public void Awake()
-    {
-
-    }   
     public SnakeChaseState(SnakeBrain brain, EnemyStateMachine machine) : base(machine)
     {
         _brain = brain;
@@ -15,6 +11,8 @@ public class SnakeChaseState : EnemyState
 
     public override void Tick()
     {
+        if (_brain.IsDead) return;
+
         var target = _brain.TargetProvider.GetTarget();
 
         // Lost the player go back to idle

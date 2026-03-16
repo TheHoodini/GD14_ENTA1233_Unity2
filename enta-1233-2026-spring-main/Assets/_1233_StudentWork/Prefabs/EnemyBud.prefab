@@ -42,6 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3163627326516446839}
+  - component: {fileID: 8070396631651298262}
   - component: {fileID: 105959327475721812}
   - component: {fileID: 8831867153812906425}
   - component: {fileID: 6108132221337164782}
@@ -50,6 +51,7 @@ GameObject:
   - component: {fileID: 6173531277446149447}
   - component: {fileID: 4756019681524435161}
   - component: {fileID: 2150213515992601596}
+  - component: {fileID: 6156189431595863894}
   m_Layer: 0
   m_Name: EnemyBud
   m_TagString: Untagged
@@ -73,6 +75,33 @@ Transform:
   - {fileID: 1916184981827529931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8070396631651298262
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808778236993538121}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &105959327475721812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _isInvulnerable: 0
+  _damageFlashDuration: 0.3
+  _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &8831867153812906425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +223,21 @@ MonoBehaviour:
   _animator: {fileID: 8831867153812906425}
   _mode: 0
   _fixedAxis: {x: 0, y: 0, z: 1}
+  _shrinkDuration: 1
+--- !u!114 &6156189431595863894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808778236993538121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588dd13b81b4cb44961337ef72b3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 105959327475721812}
+  _damageMultiplier: 1
 --- !u!1 &5957958704388170562
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +805,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8995718604172054069, guid: 740a91c480336b74387762edd492cb3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3776339925561563401}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8995718604172022285, guid: 740a91c480336b74387762edd492cb3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2524001437113153789}
   m_SourcePrefab: {fileID: 100100000, guid: 740a91c480336b74387762edd492cb3d, type: 3}
 --- !u!4 &3910853249852304646 stripped
 Transform:
@@ -776,6 +825,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8995718604172054045, guid: 740a91c480336b74387762edd492cb3d, type: 3}
   m_PrefabInstance: {fileID: 5373095792819872555}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3910853249852731686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8995718604172022285, guid: 740a91c480336b74387762edd492cb3d, type: 3}
+  m_PrefabInstance: {fileID: 5373095792819872555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2524001437113153789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910853249852731686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b4d3ddfcb0b142b0849f00cb646f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _budBrain: {fileID: 2150213515992601596}
 --- !u!95 &3910853249862075110 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8995718604181381581, guid: 740a91c480336b74387762edd492cb3d, type: 3}

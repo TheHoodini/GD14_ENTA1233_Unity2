@@ -54,6 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _isInvulnerable: 0
+  _damageFlashDuration: 0.3
+  _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &3763119625293925269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d62eec1b2fb3884aa1891fc6ff3b1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 0}
-  _animatorDriver: {fileID: 0}
+  _health: {fileID: 4704183820591084535}
+  _animatorDriver: {fileID: 3763119625293925269}
   _resetDelay: 2
   _autoReset: 1
 --- !u!114 &8026503455022714450

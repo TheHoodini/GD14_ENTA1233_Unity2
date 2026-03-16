@@ -51,7 +51,7 @@ SphereCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.23
+  m_Radius: 0.36
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5750748844628875336
 GameObject:
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 2488063309854734757}
   - component: {fileID: 188229166474886021}
   m_Layer: 0
-  m_Name: EnemySeedProjectileNoGravity
+  m_Name: PlayerProjectileNoGravity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,8 +229,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4131973653040939668, guid: f655959c5e12e414ab1125ad67385999, type: 3}
       propertyPath: m_Name
-      value: Seed
+      value: Projectile
       objectReference: {fileID: 0}
+    - target: {fileID: 4131973653042945108, guid: f655959c5e12e414ab1125ad67385999, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef4a38f11eb7c0348a33b00bd2ba1969, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

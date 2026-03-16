@@ -6,6 +6,6 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     public void OnAttackEnd()
     {
-        _playerController.OnAtackEnd();
+        _playerController.OnAttackAnimationEnd();
     }
 }

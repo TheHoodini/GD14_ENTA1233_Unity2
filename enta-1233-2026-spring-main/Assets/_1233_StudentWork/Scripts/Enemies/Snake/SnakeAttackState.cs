@@ -35,7 +35,7 @@ public class SnakeAttackState : EnemyState
         if (Time.time >= _exitTime) Machine.ChangeState(new SnakeChaseState(_brain, Machine));
     }
 
-    private void ApplyMeleeDamage()
+    public void ApplyMeleeDamage()
     {
         var target = _brain.TargetProvider.GetTarget();
 

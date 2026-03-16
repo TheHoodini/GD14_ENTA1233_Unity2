@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // Brain for the Bud Turret. Handles 3 targeting modes: Fixed Axis, Direct Aim, and Arc Fire.
@@ -22,6 +23,9 @@ public class BudBrain : MonoBehaviour
     [SerializeField] private FireMode _mode = FireMode.DirectAim;
 
     [SerializeField] private Vector3 _fixedAxis = Vector3.forward;
+
+    [Header("Death Settings")]
+    [SerializeField] private float _shrinkDuration = 1f;
 
     private ITargetProvider _targetProvider;
 
@@ -103,7 +107,30 @@ public class BudBrain : MonoBehaviour
 
     private void HandleDied()
     {
-        // Stop firing, maybe play an effect
         enabled = false;
+        _animator.TriggerDie();
+    }
+
+    public void ShrinkAndDestroy()
+    {
+        StartCoroutine(ShrinkRoutine());
+    }
+
+    private IEnumerator ShrinkRoutine()
+    {
+        Vector3 startScale = transform.localScale;
+        float timer = 0f;
+
+        while (timer < _shrinkDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / _shrinkDuration;
+
+            transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 }

@@ -32,11 +32,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     private static readonly int Speed = Animator.StringToHash("Speed");
 
+    // Attack
+    [Header("Attack")]
+    [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private Transform _muzzle;
+    [SerializeField] private float _fireRate = 1f;
+    private float _nextFireTime;
+
     // Cameras
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _normalCamera;
     [SerializeField] private CinemachineCamera _zoomedCamera;
     private bool _isZoomed;
+    private bool _wasZoomed;
 
     [SerializeField] private Health _health;
 
@@ -110,44 +118,69 @@ public class PlayerController : MonoBehaviour
         _velocity += _jumpPower;
         //Debug.Log("Jumped");
     }
-
+    // ----------------------------------------------------------------------------------
+    // ATTACK
+    // ----------------------------------------------------------------------------------
     public void Attack(InputAction.CallbackContext context)
     {
-        if (!context.started) return; 
+        if (!context.started) return;
         if (!_characterController.isGrounded) return;
-        //if (_jumped) return;
-        //if (_isAttacking) return;
+        if (_isAttacking) return;
 
         _isAttacking = true;
         _animator?.SetTrigger("IsAttacking");
+
     }
-    public void OnAtackEnd()
+    public void OnAttackAnimationEnd()
     {
         _isAttacking = false;
+        if (_isZoomed)
+        {
+            // shoot with camera
+            Vector3 cameraForward = _zoomedCamera.transform.forward;
+            Fire(cameraForward.normalized);
+        }
+        else
+        {
+            // shoot straight forward 
+            Fire(transform.forward);
+        }
     }
 
+    public void Fire(Vector3 direction)
+    {
+        //if (Time.time < _nextFireTime) return;
+        _nextFireTime = Time.time + 1f / _fireRate;
+        SpawnProjectile(direction);
+    }
+
+    private void SpawnProjectile(Vector3 direction)
+    {
+        var projectile = Instantiate(_projectilePrefab, _muzzle.position,
+            Quaternion.LookRotation(direction));
+        projectile.Launch(direction, gameObject);
+    }
+
+    // ----------------------------------------------------------------------------------
+    // CAMERA
+    // ----------------------------------------------------------------------------------
     public void CameraZoom(InputAction.CallbackContext context)
     {
         if (context.started)
         {
+            _wasZoomed = true;
             var orbital = _zoomedCamera.GetComponent<CinemachineOrbitalFollow>();
             if (orbital != null)
             {
                 orbital.HorizontalAxis.Value = transform.eulerAngles.y;
             }
-
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
             _isZoomed = true;
         }
         else if (context.canceled)
         {
-            var orbital = _normalCamera.GetComponent<CinemachineOrbitalFollow>();
-            if (orbital != null)
-            {
-                orbital.HorizontalAxis.Value = transform.eulerAngles.y;
-            }
-
+            // Removed orbital snap here — ApplyRotation handles it via _wasZoomed
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
             _isZoomed = false;
@@ -166,9 +199,9 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyRotation()
     {
-        // face camera forward when zoomed
         if (_isZoomed)
         {
+            // look forward when zoomed
             Vector3 cameraForward = _zoomedCamera.transform.forward;
             cameraForward.y = 0;
 
@@ -179,7 +212,17 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // normal rotation 
+        // snap forward when unzoomed
+        if (_wasZoomed)
+        {
+            _wasZoomed = false;
+            var orbital = _normalCamera.GetComponent<CinemachineOrbitalFollow>();
+            if (orbital != null)
+            {
+                orbital.HorizontalAxis.Value = transform.eulerAngles.y;
+            }
+        }
+
         if (_input.sqrMagnitude == 0) return;
 
         var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
@@ -187,7 +230,9 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
-
+    // ----------------------------------------------------------------------------------
+    // MOVEMENT & GRAVITY
+    // ----------------------------------------------------------------------------------
 
     private void ApplyMovement()
     {
