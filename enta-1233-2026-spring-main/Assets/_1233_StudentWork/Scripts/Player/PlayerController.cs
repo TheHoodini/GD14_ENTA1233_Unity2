@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Health _health;
 
+    private bool _isAttacking;
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
 
     public void Run(InputAction.CallbackContext context)
     {
+        if (_isZoomed) return; 
         _isRunning = context.ReadValueAsButton();
     }
 
@@ -108,10 +111,30 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Jumped");
     }
 
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (!context.started) return; 
+        if (!_characterController.isGrounded) return;
+        //if (_jumped) return;
+        //if (_isAttacking) return;
+
+        _isAttacking = true;
+        _animator?.SetTrigger("IsAttacking");
+    }
+    public void OnAtackEnd()
+    {
+        _isAttacking = false;
+    }
+
     public void CameraZoom(InputAction.CallbackContext context)
     {
         if (context.started)
         {
+            var orbital = _zoomedCamera.GetComponent<CinemachineOrbitalFollow>();
+            if (orbital != null)
+            {
+                orbital.HorizontalAxis.Value = transform.eulerAngles.y;
+            }
 
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
@@ -119,6 +142,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            var orbital = _normalCamera.GetComponent<CinemachineOrbitalFollow>();
+            if (orbital != null)
+            {
+                orbital.HorizontalAxis.Value = transform.eulerAngles.y;
+            }
+
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
             _isZoomed = false;
@@ -137,9 +166,7 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyRotation()
     {
-        if (_input.sqrMagnitude == 0) return;
-
-        // look forward when zoomed
+        // face camera forward when zoomed
         if (_isZoomed)
         {
             Vector3 cameraForward = _zoomedCamera.transform.forward;
@@ -147,11 +174,13 @@ public class PlayerController : MonoBehaviour
 
             if (cameraForward.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-                transform.rotation = targetRotation;
+                transform.rotation = Quaternion.LookRotation(cameraForward);
             }
             return;
         }
+
+        // normal rotation 
+        if (_input.sqrMagnitude == 0) return;
 
         var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, smoothTime);
@@ -176,6 +205,8 @@ public class PlayerController : MonoBehaviour
         _direction = cameraForward * _input.y + cameraRight * _input.x;
 
         _direction.y = _velocity;
+
+        if (_isAttacking) return;
 
         float _currentSpeed = speed * (_isRunning ? 2f : 1f);
         _characterController.Move(_direction * _currentSpeed * Time.deltaTime);
