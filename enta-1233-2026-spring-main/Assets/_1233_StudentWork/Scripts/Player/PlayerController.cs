@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    private bool _isDead;
+
     // Move input
     private Vector2 _input;
     private CharacterController _characterController;
@@ -48,10 +51,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Health _health;
 
+    // UI
+    [Header("UI")]
+    [SerializeField] private GameObject _uiCrosshair;
+
     private bool _isAttacking;
 
     private void Awake()
     {
+        _uiCrosshair.gameObject.SetActive(false);
         _characterController = GetComponent<CharacterController>();
         if (_health == null) _health = GetComponent<Health>();
     }
@@ -83,15 +91,20 @@ public class PlayerController : MonoBehaviour
     private void HandleDied()
     {
         Debug.Log("[Player] Died!");
+        _isDead = true;
+
+        _animator?.ResetTrigger("Hit");
+
         _animator?.SetTrigger("Die");
-        _characterController = null;
-        enabled = false;
+        _characterController.enabled = false;
+
         StartCoroutine(GameOverTransition());
     }
 
     private IEnumerator GameOverTransition()
     {
         yield return new WaitForSeconds(2);
+        enabled = false;
         GameMgr.Instance.GameOver();
     }
 
@@ -169,6 +182,7 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             _wasZoomed = true;
+            _isRunning = false;
             var orbital = _zoomedCamera.GetComponent<CinemachineOrbitalFollow>();
             if (orbital != null)
             {
@@ -176,13 +190,15 @@ public class PlayerController : MonoBehaviour
             }
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
+            _uiCrosshair.gameObject.SetActive(true);
             _isZoomed = true;
         }
         else if (context.canceled)
         {
-            // Removed orbital snap here — ApplyRotation handles it via _wasZoomed
+            // remove orbital snap here
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
+            _uiCrosshair.gameObject.SetActive(false);
             _isZoomed = false;
         }
     }
@@ -276,6 +292,8 @@ public class PlayerController : MonoBehaviour
 
     private void AnimationParameters()
     {
+        if (_isDead) return;
+
         float animSpeed = 0f;
         if (_input.sqrMagnitude > 0)
             animSpeed = _isRunning ? 2f : 1f;
@@ -287,6 +305,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (_isDead) return;
+
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();

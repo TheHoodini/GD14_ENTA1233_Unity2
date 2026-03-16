@@ -279,7 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1215424991558126259}
   - component: {fileID: 2682163408956838788}
-  - component: {fileID: 335046654602064093}
+  - component: {fileID: 4558727764757870378}
   m_Layer: 0
   m_Name: Colider
   m_TagString: Untagged
@@ -316,8 +316,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 0}
   _damageMultiplier: 1
---- !u!135 &335046654602064093
-SphereCollider:
+--- !u!136 &4558727764757870378
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -334,9 +334,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!1 &7178523120841432862
 GameObject:
   m_ObjectHideFlags: 0
