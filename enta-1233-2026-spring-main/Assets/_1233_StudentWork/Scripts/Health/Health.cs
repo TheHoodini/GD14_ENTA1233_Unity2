@@ -96,6 +96,13 @@ public class Health : MonoBehaviour
         OnDied?.Invoke();
     }
 
+    public void InstaKill()
+    {
+        if (IsDead) return;
+        CurrentHealth = 0;
+        Die();
+    }
+
     public void SetInvulnerable(bool isInvulnerable)
     {
         _isInvulnerable = isInvulnerable;

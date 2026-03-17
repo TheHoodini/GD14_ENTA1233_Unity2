@@ -824,6 +824,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: _destinations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1381090137}
@@ -837,6 +841,22 @@ PrefabInstance:
       objectReference: {fileID: 407924247}
     - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
       propertyPath: 'patrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 140460562}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: '_destinations.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1381090137}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: '_destinations.Array.data[1]'
+      value: 
+      objectReference: {fileID: 129757444}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: '_destinations.Array.data[2]'
+      value: 
+      objectReference: {fileID: 407924247}
+    - target: {fileID: 6160575715309349864, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
+      propertyPath: '_destinations.Array.data[3]'
       value: 
       objectReference: {fileID: 140460562}
     - target: {fileID: 7188116014422038030, guid: 5c36b5b5ef6a8ec4782ac22ae1c2e527, type: 3}
