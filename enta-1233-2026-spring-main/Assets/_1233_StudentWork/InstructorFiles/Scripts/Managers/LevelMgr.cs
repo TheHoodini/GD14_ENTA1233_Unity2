@@ -46,5 +46,7 @@ public class LevelMgr : Singleton<LevelMgr>
         Debug.Log($"LevelMgr: {levelName} loaded");
 
         IsLevelLoaded = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
