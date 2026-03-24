@@ -20,9 +20,6 @@ public class Grenade : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    /// <summary>
-    /// Call this right after Instantiate to arm the grenade.
-    /// </summary>
     public void Launch(Vector3 velocity, GameObject source)
     {
         _source = source;
