@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,16 @@ public class EnemyHP : MonoBehaviour
     private Camera _camera;
     private float _normalizedHealth;
 
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
+
+    private void LateUpdate()
+    {
+        if (_camera == null) return;
+        transform.forward = _camera.transform.forward;
+    }
 
     private void OnEnable()
     {
