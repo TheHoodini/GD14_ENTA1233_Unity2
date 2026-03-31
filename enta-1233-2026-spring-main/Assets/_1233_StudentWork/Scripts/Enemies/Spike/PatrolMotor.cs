@@ -21,6 +21,7 @@ public class PatrolMotor : MonoBehaviour
     void Update()
     {
         if (_destinations.Length == 0) return;
+        if (_agent == null) return;
 
         if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {

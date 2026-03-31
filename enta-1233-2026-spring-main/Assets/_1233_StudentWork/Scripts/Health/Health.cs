@@ -15,6 +15,7 @@ public class Health : MonoBehaviour
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => _maxHealth;
+    public float NormalizedHealth => MaxHealth > 0 ? 0f: (float) CurrentHealth / MaxHealth ;
     public bool IsDead { get; private set; }
 
     private Renderer[] _renderers;
@@ -32,6 +33,13 @@ public class Health : MonoBehaviour
 
         ResetHealth();
     }
+
+    // evens for other systems
+    public event Action<DamageInfo> OnDamaged;
+    public event Action OnDied;
+    public event Action OnHealed;
+    public event Action OnReset;
+    public event Action<Health> OnHealthChanged;
 
     public void Update()
     {
@@ -55,16 +63,12 @@ public class Health : MonoBehaviour
         }
     }
 
-    public event Action<DamageInfo> OnDamaged;
-    public event Action OnDied;
-    public event Action OnHealed;
-    public event Action OnReset;
-
     public void ResetHealth()
     {
         CurrentHealth = MaxHealth;
         IsDead = false;
         OnReset?.Invoke();
+        OnHealthChanged?.Invoke(this);
     }
 
     public void ApplyDamage(DamageInfo info)
@@ -78,6 +82,8 @@ public class Health : MonoBehaviour
         FlashDamageColor();
 
         OnDamaged?.Invoke(info);
+        OnHealthChanged?.Invoke(this);
+
         if (CurrentHealth <= 0) Die();
     }
 
@@ -88,6 +94,7 @@ public class Health : MonoBehaviour
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, _maxHealth);
         OnHealed?.Invoke();
+        OnHealthChanged?.Invoke(this);
     }
 
     private void Die()

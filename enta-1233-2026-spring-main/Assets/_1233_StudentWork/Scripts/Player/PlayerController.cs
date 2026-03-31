@@ -37,10 +37,15 @@ public class PlayerController : MonoBehaviour
 
     // Attack
     [Header("Attack")]
-    [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private Transform _muzzle;
+
+    [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private float _fireRate = 1f;
     private float _nextFireTime;
+
+    [SerializeField] private Grenade _grenadePrefab;
+    [SerializeField] private float _grenadeThrowForce = 12f;
+    [SerializeField] private float _grenadeArcAngle = 30f;   // degrees
 
     // Cameras
     [Header("Cameras")]
@@ -174,6 +179,31 @@ public class PlayerController : MonoBehaviour
         projectile.Launch(direction, gameObject);
     }
 
+    public void AttackGrenade(InputAction.CallbackContext context)
+    {
+        Debug.Log("Grenade");
+        if (!context.started) return;
+        if (!_characterController.isGrounded) return;
+        if (_isAttacking) return;
+        if (_grenadePrefab == null) return;
+
+        //_animator?.SetTrigger("IsAttacking");
+        ThrowGrenade();
+    }
+
+    private void ThrowGrenade()
+    {
+        Vector3 forward = _isZoomed
+            ? _zoomedCamera.transform.forward
+            : transform.forward;
+
+        Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+        Vector3 throwDir = Quaternion.AngleAxis(-_grenadeArcAngle, right) * forward;
+
+        var grenade = Instantiate(_grenadePrefab, _muzzle.position, Quaternion.identity);
+        grenade.Launch(throwDir.normalized * _grenadeThrowForce, gameObject);
+    }
+
     // ----------------------------------------------------------------------------------
     // CAMERA
     // ----------------------------------------------------------------------------------
@@ -305,9 +335,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        ApplyGravity();
+
         if (_isDead) return;
 
-        ApplyGravity();
         ApplyRotation();
         ApplyMovement();
         AnimationParameters();

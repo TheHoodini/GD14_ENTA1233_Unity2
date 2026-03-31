@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // Brain for the Spike enemy. Focuses on patrol movement and contact damage.
@@ -7,6 +8,9 @@ public class SpikeBrain : MonoBehaviour
     //[SerializeField] private PatrolMotor _patrolMotor;
     [SerializeField] private ContactDamage _contactDamage;
     [SerializeField] private EnemyAnimatorDriver _animatorDriver;
+
+    [Header("Death Settings")]
+    [SerializeField] private float _shrinkDuration = 1f;
 
     private IMover _mover;
 
@@ -48,5 +52,28 @@ public class SpikeBrain : MonoBehaviour
         }
 
         if (_animatorDriver != null) _animatorDriver.TriggerDie();
+    }
+
+    public void ShrinkAndDestroy()
+    {
+        StartCoroutine(ShrinkRoutine());
+    }
+
+    private IEnumerator ShrinkRoutine()
+    {
+        Vector3 startScale = transform.localScale;
+        float timer = 0f;
+
+        while (timer < _shrinkDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / _shrinkDuration;
+
+            transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 }
