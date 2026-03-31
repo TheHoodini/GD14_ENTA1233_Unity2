@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => _maxHealth;
-    public float NormalizedHealth => MaxHealth > 0 ? 0f: (float) CurrentHealth / MaxHealth ;
+    public float NormalizedHealth => MaxHealth > 0 ? (float) CurrentHealth / MaxHealth : 0f ;
     public bool IsDead { get; private set; }
 
     private Renderer[] _renderers;

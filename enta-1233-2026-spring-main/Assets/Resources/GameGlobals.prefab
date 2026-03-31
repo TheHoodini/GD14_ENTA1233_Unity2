@@ -45,10 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _willNotDestroyOnLoad: 0
-  _levelSceneName:
+  _levelSceneNames:
   - Level_1
   - Level_2
-  - Level_3
+  _allLevelData:
+  - SceneName: Level_1
+    LevelName: 
+    LevelIcon: {fileID: 0}
+  - SceneName: Level_2
+    LevelName: 
+    LevelIcon: {fileID: 0}
 --- !u!1 &7612291540932184289
 GameObject:
   m_ObjectHideFlags: 0
