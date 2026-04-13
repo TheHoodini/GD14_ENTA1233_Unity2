@@ -58,19 +58,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CinemachineCamera _normalCamera;
     [SerializeField] private CinemachineCamera _zoomedCamera;
     private bool _isZoomed;
+    public bool IsZoomed => _isZoomed;
     private bool _wasZoomed;
+    public event System.Action<bool> OnZoomChanged;
 
     [SerializeField] private Health _health;
-
-    // UI
-    [Header("UI")]
-    [SerializeField] private GameObject _uiCrosshair;
 
     private bool _isAttacking;
 
     private void Awake()
     {
-        _uiCrosshair.gameObject.SetActive(false);
         _characterController = GetComponent<CharacterController>();
         if (_health == null) _health = GetComponent<Health>();
     }
@@ -228,7 +225,6 @@ public class PlayerController : MonoBehaviour
             }
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
-            _uiCrosshair.gameObject.SetActive(true);
             _isZoomed = true;
         }
         else if (context.canceled)
@@ -236,9 +232,9 @@ public class PlayerController : MonoBehaviour
             // remove orbital snap here
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
-            _uiCrosshair.gameObject.SetActive(false);
             _isZoomed = false;
         }
+        OnZoomChanged?.Invoke(_isZoomed);
     }
 
     private Transform GetActiveCameraTransform()

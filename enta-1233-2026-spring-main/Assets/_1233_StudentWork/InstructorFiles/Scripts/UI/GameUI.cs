@@ -14,7 +14,9 @@ public class GameUI : MenuBase
 
     [SerializeField] private Image _healthFillImage;
     [SerializeField] private TextMeshProUGUI _potionAmountText;
+    [SerializeField] private Image _croshair;
 
+    private PlayerController _playerController;
     private Health _playerHealth;
     private int _playerPotionAmount;
 
@@ -47,11 +49,14 @@ public class GameUI : MenuBase
         if (playerObject == null)
         {
             RefreshHealthBar(null);
+            RefreshPotionBar(0);
             return;
         }
 
+        _playerController = playerObject.GetComponentInChildren<PlayerController>();
+
         _playerHealth = playerObject.GetComponentInChildren<Health>();
-        _playerPotionAmount = playerObject.GetComponentInChildren<PlayerController>()?.BombAmmo ?? 0;
+        _playerPotionAmount = _playerController?.BombAmmo ?? 0;
 
         if (_playerHealth == null)
         {
@@ -64,10 +69,12 @@ public class GameUI : MenuBase
         }
 
         _playerHealth.OnHealthChanged += RefreshHealthBar;
-        playerObject.GetComponentInChildren<PlayerController>().OnBombAmmoChanged += RefreshPotionBar;
+        _playerController.OnBombAmmoChanged += RefreshPotionBar;
+        _playerController.OnZoomChanged += RefreshCrosshair;
 
         RefreshHealthBar(_playerHealth);
         RefreshPotionBar(_playerPotionAmount);
+        RefreshCrosshair(_playerController.IsZoomed);
     }
 
     private void RefreshHealthBar(Health health)
@@ -82,5 +89,11 @@ public class GameUI : MenuBase
         if (_potionAmountText == null) return;
 
         _potionAmountText.text = potionAmount.ToString();
+    }
+
+    private void RefreshCrosshair(bool isZoomed)
+    {
+        if (_croshair == null) return;
+        _croshair.enabled = isZoomed;
     }
 }
