@@ -40,7 +40,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private float _fireRate = 1f;
     private float _nextFireTime;
-
+    [SerializeField] private int _bombAmmo = 5;
+    public event System.Action<int> OnBombAmmoChanged;
+    public int BombAmmo { 
+        get { return _bombAmmo;}
+        set { _bombAmmo = Mathf.Clamp(value, 0, 99); 
+            OnBombAmmoChanged?.Invoke(_bombAmmo);
+        }
+    }
+      
     [SerializeField] private Grenade _grenadePrefab;
     [SerializeField] private float _grenadeThrowForce = 12f;
     [SerializeField] private float _grenadeArcAngle = 30f;   // degrees
@@ -180,12 +188,14 @@ public class PlayerController : MonoBehaviour
     public void AttackGrenade(InputAction.CallbackContext context)
     {
         Debug.Log("Grenade");
+        if (BombAmmo <= 0) return;
         if (!context.started) return;
         if (!_characterController.isGrounded) return;
         if (_isAttacking) return;
         if (_grenadePrefab == null) return;
 
         //_animator?.SetTrigger("IsAttacking");
+        OnBombAmmoChanged?.Invoke(--BombAmmo);
         ThrowGrenade();
     }
 

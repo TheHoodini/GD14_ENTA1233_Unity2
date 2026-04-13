@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +13,10 @@ public class GameUI : MenuBase
     }
 
     [SerializeField] private Image _healthFillImage;
+    [SerializeField] private TextMeshProUGUI _potionAmountText;
 
     private Health _playerHealth;
+    private int _playerPotionAmount;
 
     private void OnEnable()
     {
@@ -48,14 +51,23 @@ public class GameUI : MenuBase
         }
 
         _playerHealth = playerObject.GetComponentInChildren<Health>();
+        _playerPotionAmount = playerObject.GetComponentInChildren<PlayerController>()?.BombAmmo ?? 0;
+
         if (_playerHealth == null)
         {
             Debug.LogError("GameUI: Player object does not have a Health Component.");
             return;
+        } if (_playerPotionAmount < 0)
+        {
+            Debug.LogError("GameUI: Player object does not have a PlayerController Component or BombAmmo is negative");
+            return;
         }
 
         _playerHealth.OnHealthChanged += RefreshHealthBar;
+        playerObject.GetComponentInChildren<PlayerController>().OnBombAmmoChanged += RefreshPotionBar;
+
         RefreshHealthBar(_playerHealth);
+        RefreshPotionBar(_playerPotionAmount);
     }
 
     private void RefreshHealthBar(Health health)
@@ -63,5 +75,12 @@ public class GameUI : MenuBase
         if (_healthFillImage == null) return;
 
         _healthFillImage.fillAmount = health != null ? health.NormalizedHealth : 0f;
+    }
+
+    private void RefreshPotionBar(int potionAmount)
+    {
+        if (_potionAmountText == null) return;
+
+        _potionAmountText.text = potionAmount.ToString();
     }
 }
