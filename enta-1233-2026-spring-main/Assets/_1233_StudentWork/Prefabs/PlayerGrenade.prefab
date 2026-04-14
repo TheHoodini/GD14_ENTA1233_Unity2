@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fuseTime: 3
   _explosionRadius: 5
-  _explosionDamage: 50
+  _explosionDamage: 30
   _explosionVFX: {fileID: 5213253853049221916, guid: 7f4a80b7da56e574c826ed47e2459895, type: 3}
 --- !u!1001 &4200786405498629650
 PrefabInstance:

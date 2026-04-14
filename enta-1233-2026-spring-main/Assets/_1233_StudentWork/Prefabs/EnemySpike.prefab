@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _iFramesDuration: 0.5
   _isInvulnerable: 0
   _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   _damageFlashDuration: 0.3
@@ -224,6 +225,7 @@ MonoBehaviour:
   _health: {fileID: 5989008425125284709}
   _contactDamage: {fileID: 8985592064893580169}
   _animatorDriver: {fileID: 3663585982895773777}
+  _patrolMotor: {fileID: 6160575715309349864}
   _shrinkDuration: 1
 --- !u!54 &7442064880803713789
 Rigidbody:
