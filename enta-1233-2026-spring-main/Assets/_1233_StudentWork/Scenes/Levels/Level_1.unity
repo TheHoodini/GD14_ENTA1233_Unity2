@@ -3012,7 +3012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5896191170132010207, guid: bec0f1cbb4b58a049add4c0f4352abbe, type: 3}
       propertyPath: _potionAmount
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8720313821734047882, guid: bec0f1cbb4b58a049add4c0f4352abbe, type: 3}
       propertyPath: m_Name
