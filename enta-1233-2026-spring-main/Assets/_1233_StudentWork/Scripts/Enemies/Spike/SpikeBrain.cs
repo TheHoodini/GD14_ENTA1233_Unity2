@@ -8,6 +8,7 @@ public class SpikeBrain : MonoBehaviour
     //[SerializeField] private PatrolMotor _patrolMotor;
     [SerializeField] private ContactDamage _contactDamage;
     [SerializeField] private EnemyAnimatorDriver _animatorDriver;
+    [SerializeField] private PatrolMotor _patrolMotor;
 
     [Header("Death Settings")]
     [SerializeField] private float _shrinkDuration = 1f;
@@ -56,6 +57,7 @@ public class SpikeBrain : MonoBehaviour
 
     public void ShrinkAndDestroy()
     {
+        _patrolMotor.IsAlive = false;
         StartCoroutine(ShrinkRoutine());
     }
 
@@ -73,7 +75,6 @@ public class SpikeBrain : MonoBehaviour
 
             yield return null;
         }
-
         Destroy(gameObject);
     }
 }

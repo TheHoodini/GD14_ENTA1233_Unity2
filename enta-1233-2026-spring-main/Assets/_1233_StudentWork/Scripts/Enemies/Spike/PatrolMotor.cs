@@ -6,6 +6,7 @@ public class PatrolMotor : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Transform[] _destinations;
+    public bool IsAlive = true;
     
     private int _currentIndex = 0;
 
@@ -22,6 +23,7 @@ public class PatrolMotor : MonoBehaviour
     {
         if (_destinations.Length == 0) return;
         if (_agent == null) return;
+        if (!IsAlive) return;
 
         if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {

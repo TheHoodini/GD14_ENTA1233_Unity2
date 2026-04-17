@@ -3,7 +3,7 @@ using UnityEngine;
 public class HurtZone : MonoBehaviour
 {
     [SerializeField] private int _damageAmount = 10;
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         var health = other.GetComponent<Health>();
         if (health != null)

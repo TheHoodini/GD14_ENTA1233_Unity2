@@ -5,6 +5,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private float _iFramesDuration = 0.5f;
+    private bool _isInIFrames = false;
     [SerializeField] private bool _isInvulnerable;
 
     [Header("Color settings")]
@@ -20,6 +22,7 @@ public class Health : MonoBehaviour
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
+    private Coroutine _iFramesCoroutine;
     private Coroutine _flashCoroutine;
     private Coroutine _invulnerableFlashCoroutine;
     //private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
@@ -73,7 +76,7 @@ public class Health : MonoBehaviour
 
     public void ApplyDamage(DamageInfo info)
     {
-        if (IsDead || _isInvulnerable) return;
+        if (IsDead || _isInIFrames || _isInvulnerable) return;
 
         CurrentHealth -= info.Amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, _maxHealth);
@@ -83,6 +86,7 @@ public class Health : MonoBehaviour
 
         OnDamaged?.Invoke(info);
         OnHealthChanged?.Invoke(this);
+        _iFramesCoroutine = StartCoroutine(IFramesCoroutine());
 
         if (CurrentHealth <= 0) Die();
     }
@@ -108,6 +112,13 @@ public class Health : MonoBehaviour
         if (IsDead) return;
         CurrentHealth = 0;
         Die();
+    }
+
+    private IEnumerator IFramesCoroutine()
+    {
+        _isInIFrames = true;
+        yield return new WaitForSeconds(_iFramesDuration);
+        _isInIFrames = false;
     }
 
     public void SetInvulnerable(bool isInvulnerable)

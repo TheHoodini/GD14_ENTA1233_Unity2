@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 5022595933401959666}
   - component: {fileID: 7514872644659945812}
   - component: {fileID: 6160575715309349864}
+  - component: {fileID: 5262349368966270710}
   m_Layer: 0
   m_Name: EnemySpike
   m_TagString: Untagged
@@ -191,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _iFramesDuration: 0.5
   _isInvulnerable: 0
   _damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   _damageFlashDuration: 0.3
@@ -224,6 +226,7 @@ MonoBehaviour:
   _health: {fileID: 5989008425125284709}
   _contactDamage: {fileID: 8985592064893580169}
   _animatorDriver: {fileID: 3663585982895773777}
+  _patrolMotor: {fileID: 6160575715309349864}
   _shrinkDuration: 1
 --- !u!54 &7442064880803713789
 Rigidbody:
@@ -301,6 +304,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 5022595933401959666}
   _destinations: []
+  IsAlive: 1
+--- !u!114 &5262349368966270710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188116014422038030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0588dd13b81b4cb44961337ef72b3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 5989008425125284709}
+  _damageMultiplier: 1
 --- !u!1001 &5862226515500696254
 PrefabInstance:
   m_ObjectHideFlags: 0

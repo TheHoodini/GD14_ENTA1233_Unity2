@@ -40,7 +40,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private float _fireRate = 1f;
     private float _nextFireTime;
-
+    [SerializeField] private int _bombAmmo = 5;
+    public event System.Action<int> OnBombAmmoChanged;
+    public int BombAmmo { 
+        get { return _bombAmmo;}
+        set { _bombAmmo = Mathf.Clamp(value, 0, 99); 
+            OnBombAmmoChanged?.Invoke(_bombAmmo);
+        }
+    }
+      
     [SerializeField] private Grenade _grenadePrefab;
     [SerializeField] private float _grenadeThrowForce = 12f;
     [SerializeField] private float _grenadeArcAngle = 30f;   // degrees
@@ -50,19 +58,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CinemachineCamera _normalCamera;
     [SerializeField] private CinemachineCamera _zoomedCamera;
     private bool _isZoomed;
+    public bool IsZoomed => _isZoomed;
     private bool _wasZoomed;
+    public event System.Action<bool> OnZoomChanged;
 
     [SerializeField] private Health _health;
-
-    // UI
-    [Header("UI")]
-    [SerializeField] private GameObject _uiCrosshair;
 
     private bool _isAttacking;
 
     private void Awake()
     {
-        _uiCrosshair.gameObject.SetActive(false);
         _characterController = GetComponent<CharacterController>();
         if (_health == null) _health = GetComponent<Health>();
     }
@@ -180,12 +185,14 @@ public class PlayerController : MonoBehaviour
     public void AttackGrenade(InputAction.CallbackContext context)
     {
         Debug.Log("Grenade");
+        if (BombAmmo <= 0) return;
         if (!context.started) return;
         if (!_characterController.isGrounded) return;
         if (_isAttacking) return;
         if (_grenadePrefab == null) return;
 
         //_animator?.SetTrigger("IsAttacking");
+        OnBombAmmoChanged?.Invoke(--BombAmmo);
         ThrowGrenade();
     }
 
@@ -218,7 +225,6 @@ public class PlayerController : MonoBehaviour
             }
             _normalCamera.gameObject.SetActive(false);
             _zoomedCamera.gameObject.SetActive(true);
-            _uiCrosshair.gameObject.SetActive(true);
             _isZoomed = true;
         }
         else if (context.canceled)
@@ -226,9 +232,9 @@ public class PlayerController : MonoBehaviour
             // remove orbital snap here
             _zoomedCamera.gameObject.SetActive(false);
             _normalCamera.gameObject.SetActive(true);
-            _uiCrosshair.gameObject.SetActive(false);
             _isZoomed = false;
         }
+        OnZoomChanged?.Invoke(_isZoomed);
     }
 
     private Transform GetActiveCameraTransform()
